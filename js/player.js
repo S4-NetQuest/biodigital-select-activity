@@ -1,7 +1,7 @@
 /*
- * @license Copyright 2018 S4 NetQuest, LTD.
+ * @license Copyright 2020 S4 NetQuest, LTD.
  * @preserve version	1.0.3
- * @preserve date	11.09.2018
+ * @preserve date	04.15.2020
  *
  * Recursive function to find Storyline Player in up to 7 nested parent windows
  *
