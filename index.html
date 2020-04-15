@@ -3,14 +3,28 @@
 <head>
     <meta charset="utf-8">
     <title>Biodigital human</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/S4-NetQuest/biodigital-select-activity@latest/css/style.css">
+    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/S4-NetQuest/biodigital-select-activity@latest/js/cdn-check.js"></script>
+    <script type="text/javascript" src="//developer.biodigital.com/builds/api/2/human-api.min.js"></script>
 </head>
 <body>
     <iframe id="myWidget" src="" width="100%" height="100%"></iframe>
 
-    <script type="text/javascript" src="babel-polyfill.min.js"></script>
-    <script src="//developer.biodigital.com/builds/api/2/human-api.min.js"></script>
-    <script type="text/javascript" src="player.js"></script>
-    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/S4-NetQuest/biodigital-select-activity@latest/js/babel-polyfill.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/S4-NetQuest/biodigital-select-activity@latest/js/player.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/S4-NetQuest/biodigital-select-activity@latest/js/main.js"></script>
+    <script>
+        function loadLocal() {
+            if(!window.jsdelivrUp) {
+                document.write('<script type="text/javascript" src="js/babel-polyfill.min.js"><\/script>');
+                document.write('<script type="text/javascript" src="js/player.js"><\/script>');
+                document.write('<script type="text/javascript" src="js/main.js"><\/script>');
+                document.write('<link rel="stylesheet" href="css/style.css">');
+            }
+        }
+        //After 5 seconds, load local scripts as fallback if CDN is down
+        setTimeout(loadLocal,5000);
+        
+    </script>
 </body>
 </html>
