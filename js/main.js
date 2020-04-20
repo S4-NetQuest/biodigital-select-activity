@@ -1,22 +1,24 @@
 /*
  * @license Copyright 2020 S4 NetQuest, LTD.
- * @preserve version	1.0.0
- * @preserve date	04.15.2020
+ * @preserve version	1.0.1
+ * @preserve date	04.20.2020
  *
  * Interaction with biodigital human API
  *
  * REVISIONS
  * 20200415 SHS - Initial commit
+ * 20200420 SHS - Removed leftover code, dev key assigned to window in index.html
  */
 
 //Storyline
+
 var player = new Player().init();
 
 if (player != null) {
-  document.getElementById("myWidget").setAttribute("src", player.GetVar("biodigitalPath") + '&dk=' + player.GetVar("biodigitalKey") + '&lang=' + player.GetVar("lang"));
+  document.getElementById("myWidget").setAttribute("src", player.GetVar("biodigitalPath") + '&dk=' + window.biodigitalDevKey + '&lang=' + player.GetVar("lang"));
 }
 
-var version = "1.0.0"
+var version = "1.0.1";
 var showAllCorrectParts;
 var sceneObjects = {};
 var sceneObjectsSelected = [];
@@ -37,18 +39,11 @@ player.custom = function (data) {
   console.log("custom from activity localized");
   console.log('custom:', data);
   console.log('activityCompleted:', activityCompleted);
-  if (player != null) {
-    //correctPartId = player.GetVar("correctPartId");
-    //correctPartIds = correctPartId.split(",");
-    //console.log("correctPartId:", correctPartId);
-    //console.log("correctPartIds:", correctPartIds);
-    //recursively search all scene objects for one that contains the correct string and get its ID
-    //var correctPartId = getObject(sceneObjects).objectId;
-    hiliteAllCorrectParts();
 
-    if (!activityCompleted) setTimeout(function () { player.SetVar("submitEnabled", false) }, 250);
-    activityCompleted = true;
-  }
+  hiliteAllCorrectParts();
+
+  if (!activityCompleted) setTimeout(function () { player.SetVar("submitEnabled", false) }, 250);
+  activityCompleted = true;
 }
 
 player.config = function (data) {
@@ -122,7 +117,6 @@ human.on("scene.picked", function (event) {
     console.log("Picked:", selectedPartId);
     console.log("correctPartIds:", correctPartIds, correctPartIds.length);
 
-
     for (var p = 0; p < correctPartIds.length; p++) {
       console.log("COMPARE", correctPartIds[p], selectedPartId);
       if (correctPartIds[p] == selectedPartId) {
@@ -139,74 +133,20 @@ human.on("scene.picked", function (event) {
     console.log("FINAL selected:", selectedPartId);
     console.log("activityCompleted", activityCompleted);
 
-    if (player != null) {
-      if (!activityCompleted) player.SetVar("submitEnabled", true);
-      console.log("SETTING selectedPartId->", selectedPartId);
-      player.SetVar("selectedPartId", selectedPartId);
-    }
+    if (!activityCompleted) player.SetVar("submitEnabled", true);
+    console.log("SETTING selectedPartId->", selectedPartId);
+    player.SetVar("selectedPartId", selectedPartId);
   }
 });
 
-
-/* human.on('scene.objectsSelected', function (obj) {
-  objectsSelected = obj;
-  aObjectsSelected = Object.entries(objectsSelected);
-  //console.log('scene.objectsSelected',objectsSelected);
-  console.log("CHECKING SELECTION");
-
-  for (var i = 0; i < aObjectsSelected.length; i++) {
-    if (aObjectsSelected[i][1]) {
-      console.log("selected:", aObjectsSelected[i][0]);
-      pickedObjectId = aObjectsSelected[i][0];
-      pickedObject = sceneObjects[pickedObjectId];
-
-      var selectedPartId = pickedObject.objectId;
-
-      console.log("selected", pickedObject.objectId);
-      console.log("correctPartIds", correctPartIds, correctPartIds.length);
-
-
-      for (var p = 0; p < correctPartIds.length; p++) {
-        console.log("COMPARE", correctPartIds[p], pickedObject.objectId);
-        if (correctPartIds[p] == pickedObject.objectId) {
-          console.log("  matches one of the possible correct answers", correctPartIds[p]);
-          selectedPartId = correctPartIds.join(",");
-          console.log("selectedPartId to SEND", selectedPartId);
-
-          if (showAllCorrectParts) hiliteAllCorrectParts();
-
-          break;
-        }
-      }
-
-      console.log("FINAL selected:", selectedPartId);
-      console.log("activityCompleted", activityCompleted);
-
-      if (player != null) {
-        if (!activityCompleted) player.SetVar("submitEnabled", true);
-        console.log("SETTING selectedPartId->", selectedPartId);
-        player.SetVar("selectedPartId", selectedPartId);
-      }
-      return;
-    }
-  }
-  //console.log("nothing selected");
-  if (player != null) {
-    player.SetVar("submitEnabled", false);
-    player.SetVar("selectedPartId", "");
-  }
-}); */
-
 human.once("human.ready", function () {
   console.log("human.ready");
-  if (player != null) {
-    player.SetVar("humanReady", Math.random().toString().slice(2, 11));
-    correctPartId = player.GetVar("correctPartId");
-    correctPartId.indexOf(",") >= 0 ? correctPartIds = correctPartId.split(",") : correctPartIds[0] = correctPartId;
-    console.log("correctPartId:", correctPartId);
-    console.log("correctPartIds:", correctPartIds);
-  }
-  //document.getElementById("widget-cover").style.display = "none";
+  player.SetVar("humanReady", Math.random().toString().slice(2, 11));
+  correctPartId = player.GetVar("correctPartId");
+  correctPartId.indexOf(",") >= 0 ? correctPartIds = correctPartId.split(",") : correctPartIds[0] = correctPartId;
+  console.log("correctPartId:", correctPartId);
+  console.log("correctPartIds:", correctPartIds);
+
   // get a list of objects
   human.send("scene.info", function (data) {
     // get global objects
