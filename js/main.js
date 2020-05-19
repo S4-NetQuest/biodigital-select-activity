@@ -1,13 +1,14 @@
 /*
  * @license Copyright 2020 S4 NetQuest, LTD.
- * @preserve version	1.0.1
- * @preserve date	04.20.2020
+ * @preserve version	1.0.3
+ * @preserve date	05.18.2020
  *
  * Interaction with biodigital human API
  *
  * REVISIONS
  * 20200415 SHS - Initial commit
  * 20200420 SHS - Removed leftover code, dev key assigned to window in index.html
+ * 20200518 SHS - Changed version number for github. No other changes.
  */
 
 //Storyline
@@ -18,7 +19,7 @@ if (player != null) {
   document.getElementById("myWidget").setAttribute("src", player.GetVar("biodigitalPath") + '&dk=' + window.biodigitalDevKey + '&lang=' + player.GetVar("lang"));
 }
 
-var version = "1.0.1";
+var version = "1.0.3";
 var showAllCorrectParts;
 var sceneObjects = {};
 var sceneObjectsSelected = [];
