@@ -1,1 +1,1 @@
-window.jsdelivrUp = true;
+window.jsdelivrUp = false;
